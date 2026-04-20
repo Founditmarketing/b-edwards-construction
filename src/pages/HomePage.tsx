@@ -265,7 +265,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {BLOG_POSTS.map((post, i) => (
+            {BLOG_POSTS.slice(0, 3).map((post, i) => (
               <motion.div
                 key={post.slug}
                 initial={{ opacity: 0, y: 20 }}
@@ -290,10 +290,10 @@ export default function HomePage() {
                   </h3>
                   <p className="text-sm text-gray-500 leading-relaxed flex-1">{post.excerpt}</p>
                   <Link
-                    to="/contact"
+                    to={`/blog/${post.slug}`}
                     className="mt-5 text-[10px] font-black uppercase tracking-widest self-start border-b border-deep-black pb-0.5 hover:border-construction-yellow hover:text-construction-yellow transition-colors"
                   >
-                    Get in Touch →
+                    Read Article →
                   </Link>
                 </div>
               </motion.div>

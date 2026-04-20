@@ -53,10 +53,10 @@ export default function BlogPage() {
                   </h2>
                   <p className="text-sm text-gray-500 leading-relaxed flex-1">{post.excerpt}</p>
                   <Link
-                    to="/contact"
+                    to={`/blog/${post.slug}`}
                     className="mt-6 text-[10px] font-black uppercase tracking-widest self-start border-b border-deep-black pb-0.5 hover:border-construction-yellow hover:text-construction-yellow transition-colors"
                   >
-                    Start Your Project →
+                    Read Article →
                   </Link>
                 </div>
               </motion.article>
