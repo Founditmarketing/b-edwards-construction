@@ -136,6 +136,7 @@ export default function App() {
                 </div>
 
                 <a href="#gallery" className="hover:text-construction-yellow transition-colors">Gallery</a>
+                <a href="#blog" className="hover:text-construction-yellow transition-colors">Blog</a>
                 <a href="#contact" className="hover:text-construction-yellow transition-colors">Contact</a>
               </div>
 
@@ -173,6 +174,7 @@ export default function App() {
                 <a onClick={() => setIsMenuOpen(false)} href="#about">About</a>
                 <a onClick={() => setIsMenuOpen(false)} href="#services">Services</a>
                 <a onClick={() => setIsMenuOpen(false)} href="#gallery">Gallery</a>
+                <a onClick={() => setIsMenuOpen(false)} href="#blog">Blog</a>
                 <a onClick={() => setIsMenuOpen(false)} href="#contact">Contact</a>
               </nav>
               <div className="pt-8 border-t-4 border-deep-black space-y-4">
@@ -185,7 +187,7 @@ export default function App() {
       </nav>
 
       {/* 2. Hero Section */}
-      <section id="home" className="relative min-h-[600px] h-[70vh] flex items-center justify-center overflow-hidden pt-[70px] border-b-4 border-deep-black">
+      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden border-b-4 border-deep-black">
         {/* Background Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -196,7 +198,7 @@ export default function App() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 w-full h-full flex flex-col justify-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 w-full h-full flex flex-col justify-center pt-[70px]">
           <div className="text-construction-yellow font-black text-xs tracking-[0.3em] mb-4">LOUISIANA'S PREMIER BUILDERS</div>
           
           {/* Construction Animation Catchphrase */}
@@ -224,10 +226,21 @@ export default function App() {
               Get a Free Quote
             </a>
             <a href="#gallery" className="bg-white text-deep-black px-8 py-5 font-black text-lg uppercase border-4 border-deep-black hover:bg-construction-yellow transition-all transform hover:-translate-y-1 sturdy-border text-center">
-              View Projects
+              View Our Work
             </a>
           </div>
         </div>
+
+        {/* Scroll cue */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/60 cursor-pointer"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
+          onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          <span className="text-[10px] font-black uppercase tracking-widest">Scroll</span>
+          <ChevronDown className="w-5 h-5" />
+        </motion.div>
       </section>
 
       {/* 3. Trust Bar */}
@@ -312,13 +325,70 @@ export default function App() {
         </div>
       </section>
 
-      {/* Quick Links Bar */}
-      <section className="h-[80px] bg-white border-t-4 border-deep-black grid grid-cols-2 md:grid-cols-5 font-black uppercase text-[10px] tracking-widest text-steel-gray">
-        <a href="#service-metal-buildings" className="flex items-center justify-center border-r-2 border-deep-black hover:bg-construction-yellow hover:text-deep-black transition-all">Metal Buildings</a>
-        <a href="#service-concrete-foundations" className="flex items-center justify-center border-r-2 border-deep-black hover:bg-construction-yellow hover:text-deep-black transition-all">Concrete Foundations</a>
-        <a href="#service-roofs" className="flex items-center justify-center border-r-0 md:border-r-2 border-deep-black hover:bg-construction-yellow hover:text-deep-black transition-all">Roofs</a>
-        <a href="#service-shops" className="flex items-center justify-center border-r-2 border-deep-black hover:bg-construction-yellow hover:text-deep-black transition-all">Shops &amp; Camps</a>
-        <a href="#contact" className="flex items-center justify-center hover:bg-construction-yellow hover:text-deep-black transition-all">Get a Quote</a>
+      {/* Blog Preview Section */}
+      <section id="blog" className="py-24 bg-white border-t-4 border-deep-black">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div>
+              <p className="text-construction-yellow font-black text-xs tracking-[0.3em] mb-2">FROM THE FIELD</p>
+              <h2 className="text-4xl md:text-5xl font-black uppercase leading-tight">Build Knowledge</h2>
+            </div>
+            <a href="#contact" className="text-xs font-black uppercase underline underline-offset-4 hover:text-construction-yellow transition-colors whitespace-nowrap">
+              Get a Free Estimate →
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                img: '/images/gallery/gallery-26.jpg',
+                tag: 'Metal Buildings',
+                title: 'Why Metal Buildings Are the Smart Choice in Louisiana',
+                excerpt: 'From humidity to hurricanes, Louisiana\'s climate demands structures built to last. Here\'s why metal is the material of choice for builders across the state.',
+                date: 'March 2025',
+              },
+              {
+                img: '/images/gallery/gallery-08.jpg',
+                tag: 'Foundations',
+                title: 'What You Need to Know Before Pouring a Concrete Foundation',
+                excerpt: 'Soil conditions matter more than most people think. We break down the key decisions that determine whether your foundation holds up for decades.',
+                date: 'February 2025',
+              },
+              {
+                img: '/images/gallery/gallery-09.jpg',
+                tag: 'Barns & Shops',
+                title: 'Building a Shop or Barn: What to Plan for Before You Start',
+                excerpt: 'Site preparation, permits, utilities — the decisions you make before the first post goes in the ground are the ones that determine the final result.',
+                date: 'January 2025',
+              },
+            ].map((post, i) => (
+              <motion.div
+                key={post.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group border-2 border-deep-black bg-white flex flex-col"
+              >
+                <div className="h-52 overflow-hidden border-b-2 border-deep-black">
+                  <img
+                    src={post.img}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-construction-yellow mb-2">{post.tag} · {post.date}</span>
+                  <h3 className="text-lg font-black leading-tight mb-3 group-hover:text-construction-yellow transition-colors">{post.title}</h3>
+                  <p className="text-xs text-steel-gray leading-relaxed flex-1">{post.excerpt}</p>
+                  <a href="#contact" className="mt-4 text-[10px] font-black uppercase tracking-widest border-b-2 border-deep-black pb-0.5 self-start hover:border-construction-yellow hover:text-construction-yellow transition-colors">
+                    Contact Us →
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Contact / Quote Section */}
