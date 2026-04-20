@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { BLOG_POSTS } from '../constants';
+import SEO from '../components/SEO';
 
 export default function BlogPage() {
   return (
     <>
+      <SEO
+        title="Construction Blog & Insights"
+        description="Stay updated with the latest construction trends, advice, and tips for building in Louisiana from the team at B. Edwards Construction."
+        path="/blog"
+        image="/images/gallery/gallery-08.jpg"
+      />
       {/* Page Hero */}
       <div className="page-hero">
         <img src="/images/gallery/gallery-08.jpg" alt="B. Edwards blog" className="page-hero-img" />

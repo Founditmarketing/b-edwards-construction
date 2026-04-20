@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Award, Wrench } from 'lucide-react';
 import { SERVICES, HERO_GALLERY, BLOG_POSTS, BUSINESS } from '../constants';
+import SEO, { localBusinessSchema, faqSchema } from '../components/SEO';
 
 export default function HomePage() {
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -37,6 +38,12 @@ export default function HomePage() {
 
   return (
     <>
+      <SEO
+        title="B. Edwards Construction | Metal Buildings, Concrete & More"
+        description="Louisiana's premier builder specializing in metal buildings, concrete foundations, roofs, shops, camps, barns, and patios. Call (318) 481-7588."
+        path="/"
+        schemas={[localBusinessSchema, faqSchema]}
+      />
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section id="home" className="relative h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">

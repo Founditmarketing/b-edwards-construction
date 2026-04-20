@@ -2,12 +2,18 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 import { GALLERY } from '../constants';
+import SEO from '../components/SEO';
 
 export default function GalleryPage() {
   const [lightbox, setLightbox] = useState<string | null>(null);
 
   return (
     <>
+      <SEO
+        title="Project Gallery"
+        description="View our portfolio of completed projects across Louisiana, including metal buildings, concrete foundations, barndominiums, and custom shops."
+        path="/gallery"
+      />
       {/* Page Hero */}
       <div className="page-hero">
         <img src="/images/gallery/gallery-26.jpg" alt="B. Edwards Construction gallery" className="page-hero-img" />

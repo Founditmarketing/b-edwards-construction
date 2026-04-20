@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ShieldCheck, Award, Wrench, Clock } from 'lucide-react';
 import { BUSINESS } from '../constants';
+import SEO from '../components/SEO';
 
 const VALUES = [
   {
@@ -29,6 +30,12 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <>
+      <SEO
+        title="About Us"
+        description="Learn about B. Edwards Construction, a trusted Louisiana local business with over 10 years of experience delivering quality metal buildings and concrete work."
+        path="/about"
+        image="/images/about/about-concrete.jpg"
+      />
       {/* Page Hero */}
       <div className="page-hero">
         <img src="/images/about/about-concrete.jpg" alt="B. Edwards Construction" className="page-hero-img" />

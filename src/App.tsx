@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -27,6 +28,7 @@ function ScrollHandler() {
 
 export default function App() {
   return (
+    <HelmetProvider>
     <BrowserRouter>
       <ScrollHandler />
       <Navbar />
@@ -43,5 +45,6 @@ export default function App() {
       </main>
       <Footer />
     </BrowserRouter>
+    </HelmetProvider>
   );
 }

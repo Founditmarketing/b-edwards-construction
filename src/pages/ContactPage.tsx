@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Phone, MapPin, Mail } from 'lucide-react';
 import { BUSINESS } from '../constants';
+import SEO from '../components/SEO';
 
 export default function ContactPage() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -46,6 +47,12 @@ export default function ContactPage() {
 
   return (
     <>
+      <SEO
+        title="Contact Us | Free Estimates"
+        description="Ready to start your next construction project in Louisiana? Contact B. Edwards Construction today for a free, no-obligation estimate."
+        path="/contact"
+        image="/images/gallery/gallery-14.jpg"
+      />
       {/* Page Hero */}
       <div className="page-hero">
         <img src="/images/gallery/gallery-14.jpg" alt="Contact B. Edwards Construction" className="page-hero-img" />

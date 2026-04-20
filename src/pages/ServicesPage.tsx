@@ -2,10 +2,18 @@ import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ChevronRight } from 'lucide-react';
 import { SERVICES } from '../constants';
+import SEO, { serviceSchema } from '../components/SEO';
 
 export default function ServicesPage() {
   return (
     <>
+      <SEO
+        title="Construction Services"
+        description="From metal buildings and concrete foundations to custom shops and roofing. Explore B. Edwards Construction's full range of competitive services."
+        path="/services"
+        image="/images/services/metal-buildings.jpg"
+        schemas={SERVICES.map(s => serviceSchema(s))}
+      />
       {/* Page Hero */}
       <div className="page-hero">
         <img src="/images/services/metal-buildings.jpg" alt="B. Edwards Construction services" className="page-hero-img" />

@@ -2,6 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Phone } from 'lucide-react';
 import { BLOG_POSTS, BUSINESS } from '../constants';
+import SEO, { articleSchema, breadcrumbSchema } from '../components/SEO';
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -15,6 +16,21 @@ export default function BlogPostPage() {
 
   return (
     <>
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        path={`/blog/${post.slug}`}
+        image={post.img}
+        type="article"
+        schemas={[
+          articleSchema(post),
+          breadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'Blog', url: '/blog' },
+            { name: post.title, url: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
       {/* Hero image */}
       <div className="relative h-72 md:h-96 overflow-hidden">
         <img src={post.img} alt={post.title} className="absolute inset-0 w-full h-full object-cover brightness-[0.4]" />
