@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -8,21 +8,13 @@
 
   --color-construction-yellow: #FFB800;
   --color-steel-gray: #2D2D2D;
-  --color-deep-black: #000000;
+  --color-deep-black: #0a0a0a;
+  --color-off-white: #f8f7f4;
 
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
+  /* No forced border-radius removal — let me control it per element */
 }
 
 @layer base {
-  * {
-    @apply border-deep-black;
-    border-radius: 0 !important;
-  }
-  
   html {
     scroll-behavior: smooth;
   }
@@ -32,23 +24,50 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-black uppercase tracking-tight;
+    @apply font-display font-bold tracking-tight;
   }
 }
 
-/* Custom Utilities */
-.block-divider {
-  @apply h-6 bg-construction-yellow border-y-4 border-deep-black w-full;
+/* Accent underline for section headings */
+.section-label {
+  @apply text-construction-yellow font-black text-xs tracking-[0.25em] uppercase mb-3 block;
 }
 
-.sturdy-border {
-  @apply border-4 border-deep-black;
+.section-heading {
+  @apply text-4xl md:text-5xl font-black uppercase leading-tight;
 }
 
-.sturdy-shadow {
-  box-shadow: 10px 10px 0px 0px #000000;
+.accent-line {
+  @apply w-12 h-1 bg-construction-yellow mt-4 mb-8;
 }
 
-.sturdy-shadow-yellow {
-  box-shadow: 10px 10px 0px 0px var(--color-construction-yellow);
+/* Page hero banner */
+.page-hero {
+  @apply relative h-64 md:h-80 flex items-end overflow-hidden pt-[70px];
+}
+
+.page-hero-img {
+  @apply absolute inset-0 w-full h-full object-cover brightness-50;
+}
+
+.page-hero-content {
+  @apply relative z-10 max-w-7xl mx-auto px-6 pb-10 w-full;
+}
+
+/* Card styles — thin shadow, no heavy borders */
+.card {
+  @apply bg-white shadow-sm hover:shadow-md transition-shadow duration-300;
+}
+
+/* Primary CTA */
+.btn-primary {
+  @apply inline-flex items-center justify-center bg-construction-yellow text-deep-black font-black uppercase tracking-wider px-8 py-4 hover:bg-white border-2 border-construction-yellow hover:border-deep-black transition-all duration-200;
+}
+
+.btn-outline-white {
+  @apply inline-flex items-center justify-center border-2 border-white text-white font-black uppercase tracking-wider px-8 py-4 hover:bg-white hover:text-deep-black transition-all duration-200;
+}
+
+.btn-outline-dark {
+  @apply inline-flex items-center justify-center border-2 border-deep-black text-deep-black font-black uppercase tracking-wider px-8 py-4 hover:bg-deep-black hover:text-white transition-all duration-200;
 }
