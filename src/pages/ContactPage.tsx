@@ -1,18 +1,47 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Phone, MapPin, Mail } from 'lucide-react';
 import { BUSINESS } from '../constants';
 
 export default function ContactPage() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === 'loading' || status === 'success') return;
+    setStatus('loading');
+
     const form = e.currentTarget;
-    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
-    const phone = (form.elements.namedItem('phone') as HTMLInputElement).value;
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
-    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
-    const subject = encodeURIComponent('Free Estimate Request');
-    const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:${BUSINESS.email}?subject=${subject}&body=${body}`;
+    const formData = new FormData(form);
+
+    const data = {
+      access_key: (import.meta as any).env?.VITE_WEB3FORMS_ACCESS_KEY || 'YOUR_ACCESS_KEY_HERE',
+      subject: 'New Estimate Request from Website',
+      name: formData.get('name'),
+      phone: formData.get('phone'),
+      email: formData.get('email') || 'Not provided',
+      message: formData.get('message'),
+    };
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setStatus('success');
+        form.reset();
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 5000);
+      }
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   return (
@@ -168,9 +197,10 @@ export default function ContactPage() {
                 </div>
                 <button
                   type="submit"
-                  className="btn-primary w-full justify-center"
+                  disabled={status === 'loading' || status === 'success'}
+                  className="btn-primary w-full justify-center disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Send Request
+                  {status === 'loading' ? 'Sending...' : status === 'success' ? 'Message Sent!' : status === 'error' ? 'Error — Try Again' : 'Send Request'}
                 </button>
               </form>
             </motion.div>

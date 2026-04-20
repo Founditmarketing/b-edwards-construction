@@ -1,17 +1,46 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, MapPin } from 'lucide-react';
 import { SERVICES, BUSINESS } from '../constants';
 
 export default function Footer() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === 'loading' || status === 'success') return;
+    setStatus('loading');
+
     const form = e.currentTarget;
-    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
-    const phone = (form.elements.namedItem('phone') as HTMLInputElement).value;
-    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
-    const subject = encodeURIComponent('Free Estimate Request');
-    const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\n\n${message}`);
-    window.location.href = `mailto:${BUSINESS.email}?subject=${subject}&body=${body}`;
+    const formData = new FormData(form);
+
+    const data = {
+      access_key: (import.meta as any).env?.VITE_WEB3FORMS_ACCESS_KEY || 'YOUR_ACCESS_KEY_HERE',
+      subject: 'New Estimate Request from Website',
+      name: formData.get('name'),
+      phone: formData.get('phone'),
+      message: formData.get('message'),
+    };
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setStatus('success');
+        form.reset();
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 5000);
+      }
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   return (
@@ -128,9 +157,10 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="w-full bg-construction-yellow text-deep-black font-black uppercase tracking-wider py-3 text-sm hover:bg-white transition-colors"
+              disabled={status === 'loading' || status === 'success'}
+              className="w-full bg-construction-yellow text-deep-black font-black uppercase tracking-wider py-3 text-sm hover:bg-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Send Request
+              {status === 'loading' ? 'Sending...' : status === 'success' ? 'Message Sent!' : status === 'error' ? 'Error — Try Again' : 'Send Request'}
             </button>
           </form>
         </div>
