@@ -18,13 +18,13 @@ import {
 } from 'lucide-react';
 
 const SERVICES = [
-  { name: 'Metal Buildings', img: 'https://picsum.photos/seed/metal-build/800/600' },
-  { name: 'Concrete Foundations', img: 'https://picsum.photos/seed/concrete/800/600' },
-  { name: 'Roofs', img: 'https://picsum.photos/seed/roof/800/600' },
-  { name: 'Shops', img: 'https://picsum.photos/seed/shop/800/600' },
-  { name: 'Camps', img: 'https://picsum.photos/seed/camp/800/600' },
-  { name: 'Barns', img: 'https://picsum.photos/seed/barn/800/600' },
-  { name: 'Patios', img: 'https://picsum.photos/seed/patio/800/600' },
+  { name: 'Metal Buildings',      img: '/images/services/metal-buildings.jpg' },
+  { name: 'Concrete Foundations', img: '/images/services/concrete-foundations.jpg' },
+  { name: 'Roofs',                img: '/images/services/roofs.jpg' },
+  { name: 'Shops',                img: '/images/services/shops.jpg' },
+  { name: 'Camps',                img: '/images/services/camps.jpg' },
+  { name: 'Barns',                img: '/images/services/barns.jpg' },
+  { name: 'Patios',               img: '/images/services/patios.jpg' },
 ];
 
 const SERVICE_DESCRIPTIONS: Record<string, string> = {
@@ -38,10 +38,12 @@ const SERVICE_DESCRIPTIONS: Record<string, string> = {
 };
 
 const GALLERY = [
-  'https://picsum.photos/seed/gal1/1200/800',
-  'https://picsum.photos/seed/gal2/1200/800',
-  'https://picsum.photos/seed/gal3/1200/800',
-  'https://picsum.photos/seed/gal4/1200/800',
+  '/images/gallery/gallery-26.jpg',
+  '/images/gallery/gallery-05.jpg',
+  '/images/gallery/gallery-08.jpg',
+  '/images/gallery/gallery-29.jpg',
+  '/images/gallery/gallery-14.jpg',
+  '/images/gallery/gallery-01.jpg',
 ];
 
 export default function App() {
@@ -96,12 +98,11 @@ export default function App() {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="bg-construction-yellow px-3 py-1 font-black text-deep-black text-xl border-2 border-white uppercase italic">
-                BE CONST.
-              </div>
-              <span className="text-xl font-black uppercase tracking-tighter leading-none hidden sm:block">
-                B. Edwards<br />Construction
-              </span>
+              <img
+                src="/images/logo/logo.png"
+                alt="B. Edwards Construction"
+                className="h-12 w-auto object-contain"
+              />
             </div>
 
             {/* Desktop Menu */}
@@ -188,10 +189,9 @@ export default function App() {
         {/* Background Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://picsum.photos/seed/construction-site/1920/1080" 
-            alt="Hero Background" 
-            className="w-full h-full object-cover grayscale brightness-50"
-            referrerPolicy="no-referrer"
+            src="/images/hero/hero-carport.jpg" 
+            alt="B. Edwards Construction — metal carport build" 
+            className="w-full h-full object-cover brightness-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
         </div>
@@ -267,18 +267,16 @@ export default function App() {
           <div className="grid grid-cols-2 lg:grid-cols-1 gap-0">
              <div className="relative h-full min-h-[200px] border-b-4 lg:border-b-4 border-deep-black">
                 <img 
-                  src="https://picsum.photos/seed/team-work/600/800" 
-                  alt="Construction work" 
-                  className="w-full h-full object-cover grayscale"
-                  referrerPolicy="no-referrer"
+                  src="/images/about/about-concrete.jpg" 
+                  alt="B. Edwards Construction — concrete foundation work" 
+                  className="w-full h-full object-cover"
                 />
              </div>
              <div className="relative h-full min-h-[200px]">
                 <img 
-                  src="https://picsum.photos/seed/blueprint/600/800" 
-                  alt="Blueprints" 
+                  src="/images/gallery/gallery-10.jpg" 
+                  alt="B. Edwards Construction — metal building project" 
                   className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
                 />
              </div>
           </div>
@@ -426,12 +424,12 @@ export default function App() {
             <motion.img
               key={activeGalleryIndex}
               src={GALLERY[activeGalleryIndex]}
+              alt={`B. Edwards Construction project ${activeGalleryIndex + 1}`}
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.5 }}
-              className="absolute inset-0 w-full h-full object-cover grayscale-0 hover:grayscale-[0.5] transition-all"
-              referrerPolicy="no-referrer"
+              className="absolute inset-0 w-full h-full object-cover hover:grayscale-[0.5] transition-all"
             />
           </AnimatePresence>
           
@@ -444,9 +442,23 @@ export default function App() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 mt-8 flex justify-center">
+        {/* Dot indicators */}
+        <div className="max-w-7xl mx-auto px-4 mt-6 flex justify-center gap-2">
+          {GALLERY.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveGalleryIndex(idx)}
+              className={`w-2 h-2 rounded-full border border-white transition-all ${
+                idx === activeGalleryIndex ? 'bg-construction-yellow border-construction-yellow scale-125' : 'bg-white/30'
+              }`}
+              aria-label={`Go to project ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 mt-6 flex justify-center">
            <a href="#contact" className="group flex items-center font-display font-black uppercase text-xl hover:text-construction-yellow transition-colors">
-              Full Gallery <ChevronRight className="ml-2 group-hover:translate-x-2 transition-transform" />
+              Get a Free Quote <ChevronRight className="ml-2 group-hover:translate-x-2 transition-transform" />
            </a>
         </div>
       </section>
@@ -476,7 +488,7 @@ export default function App() {
   );
 }
 
-function ServiceCard({ service, i }: { service: any, i: number, key?: any }) {
+function ServiceCard({ service, i }: { service: { name: string; img: string }, i: number, key?: any }) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 15 }}
@@ -484,17 +496,21 @@ function ServiceCard({ service, i }: { service: any, i: number, key?: any }) {
       viewport={{ once: true }}
       transition={{ delay: i * 0.05 }}
       id={`service-${service.name.toLowerCase().replaceAll(' ', '-')}`}
-      className="relative bg-white border-2 border-deep-black p-2 text-center group cursor-pointer flex flex-col h-full"
+      className="relative bg-white border-2 border-deep-black p-2 text-center group cursor-pointer flex flex-col h-full overflow-hidden"
     >
-      <div className="h-44 overflow-hidden border-2 border-deep-black mb-3">
+      <div className="h-44 overflow-hidden border-2 border-deep-black mb-3 relative">
         <img 
           src={service.img} 
           alt={service.name} 
           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110"
-          referrerPolicy="no-referrer"
         />
       </div>
-      <h3 className="text-[11px] font-black uppercase group-hover:text-construction-yellow transition-colors mt-auto">{service.name}</h3>
+      <h3 className="text-[11px] font-black uppercase group-hover:text-construction-yellow transition-colors mt-auto pb-2">{service.name}</h3>
+      {/* Hover description overlay */}
+      <div className="absolute inset-0 bg-deep-black/90 text-white flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <h3 className="text-sm font-black uppercase text-construction-yellow mb-2">{service.name}</h3>
+        <p className="text-[11px] leading-relaxed text-white/80 text-left">{SERVICE_DESCRIPTIONS[service.name]}</p>
+      </div>
     </motion.div>
   );
 }
