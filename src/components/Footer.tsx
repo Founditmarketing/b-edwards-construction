@@ -28,7 +28,7 @@ export default function Footer() {
             <img
               src="/images/logo/logo.png"
               alt="B. Edwards Construction"
-              className="h-14 w-auto object-contain mb-6"
+              className="h-14 w-auto object-contain brightness-0 invert mb-6"
             />
           </Link>
           <p className="text-white/60 text-sm leading-relaxed mb-6">

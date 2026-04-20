@@ -24,7 +24,7 @@ export default function Navbar() {
           <img
             src="/images/logo/logo.png"
             alt="B. Edwards Construction"
-            className="h-11 w-auto object-contain"
+            className="h-11 w-auto object-contain brightness-0 invert"
           />
         </Link>
 
