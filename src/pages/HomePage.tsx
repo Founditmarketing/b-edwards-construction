@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Award, Wrench } from 'lucide-react';
@@ -6,6 +6,17 @@ import { SERVICES, HERO_GALLERY, BLOG_POSTS, BUSINESS } from '../constants';
 
 export default function HomePage() {
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const isPaused = useRef(false);
+
+  // Auto-advance gallery every 4 s, pause on hover
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!isPaused.current) {
+        setGalleryIndex(p => (p === HERO_GALLERY.length - 1 ? 0 : p + 1));
+      }
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   const catchphrase = 'Built from the ground up, Built for Louisiana.';
   const words = catchphrase.split(' ');
@@ -178,7 +189,9 @@ export default function HomePage() {
 
       {/* ── GALLERY CAROUSEL ───────────────────────────────────── */}
       <section id="gallery" className="py-24 bg-deep-black text-white">
-        <div className="max-w-7xl mx-auto px-6 mb-8 flex justify-between items-center">
+        <div
+          className="max-w-7xl mx-auto px-6 mb-8 flex justify-between items-center"
+        >
           <div>
             <span className="section-label">Project Showcase</span>
             <h2 className="section-heading text-white">Our Work</h2>
@@ -201,7 +214,11 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative h-[520px] w-full overflow-hidden">
+        <div
+          className="relative h-[520px] w-full overflow-hidden"
+          onMouseEnter={() => { isPaused.current = true; }}
+          onMouseLeave={() => { isPaused.current = false; }}
+        >
           <AnimatePresence mode="wait">
             <motion.img
               key={galleryIndex}
@@ -321,7 +338,7 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
         <img
           src={service.img}
           alt={service.name}
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
       </div>
       <div className="bg-white px-4 py-3 border-t-2 border-construction-yellow">
